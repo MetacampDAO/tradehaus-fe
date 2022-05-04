@@ -550,7 +550,7 @@ const Content: FC = () => {
                                                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
                                                                     Payment from{' '}
                                                                     <span className="font-semibold">
-                                                                        THEMESBERG LLC
+                                                                        TradeHaus
                                                                     </span>
                                                                 </td>
                                                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
@@ -1044,8 +1044,8 @@ const Content: FC = () => {
                     </footer>
                     <p className="text-center text-sm text-gray-500 my-10">
                         &copy; 2019-2021{' '}
-                        <a href="https://themesberg.com" className="hover:underline">
-                            Themesberg
+                        <a href="https://openhaus.community" className="hover:underline">
+                            TadeHaus
                         </a>
                         . All rights reserved.
                     </p>
