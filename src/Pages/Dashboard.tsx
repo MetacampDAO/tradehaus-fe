@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
-import Acquisition from './Acquisition';
-import Footer from './Footer';
-import LatestCustomer from './LatestCustomer';
-import LatestTransaction from './LatestTransaction';
-import MainChart from './MainChart';
-import NavBar from './NavBar';
-import SideBar from './SideBar';
-import SummaryStats from './SummaryStats';
+import Acquisition from '../Components/Acquisition';
+import Footer from '../Components/Footer';
+import LatestCustomer from '../Components/LatestCustomer';
+import LatestTransaction from '../Components/LatestTransaction';
+import MainChart from '../Components/MainChart';
+import NavBar from '../Components/NavBar';
+import SideBar from '../Components/SideBar';
+import SummaryStats from '../Components/SummaryStats';
 
 const Content: FC = () => {
     return (
