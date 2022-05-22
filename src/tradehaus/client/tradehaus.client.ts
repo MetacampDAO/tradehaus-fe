@@ -45,10 +45,6 @@ export class TradehausClient extends AccountUtils {
         programId,
         this.provider
       );
-    } else {
-      //means running inside test suite
-      // @ts-ignore
-      this.tradehausProgram = anchor.workspace.Tradehaus as Program<Tradehaus>;
     }
   }
 
