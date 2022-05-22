@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC} from 'react';
 import NavBar from './components/NavBar';
 import Home from './home';
 import Create from './create';
