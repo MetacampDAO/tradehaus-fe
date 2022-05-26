@@ -1,7 +1,8 @@
-import React, { FC} from 'react';
+import React, { FC } from 'react';
 import NavBar from './components/NavBar';
 import Home from './home';
 import Create from './create';
+import Join from './join';
 import Main from './components/Main';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Context from './Context';
@@ -9,19 +10,22 @@ import Context from './Context';
 export const App: FC = () => {
     return (
         <Context>
-            <NavBar />
-            <Main childComp={
-                <BrowserRouter>
+            <BrowserRouter>
+                <NavBar />
+                <Main childComp={
                     <Routes>
-                        <Route path='/create' element ={
+                        <Route path='/join' element={
+                            <Join />
+                        } />
+                        <Route path='/create' element={
                             <Create />
-                        }/>
-                        <Route path='/' element ={
+                        } />
+                        <Route path='/' element={
                             <Home />
-                        }/>
+                        } />
                     </Routes>
-                </BrowserRouter>
-            }/>
+                } />
+            </BrowserRouter>
         </Context>
     );
 };

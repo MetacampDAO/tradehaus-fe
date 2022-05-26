@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 const SideBar = () => {
     return (
@@ -12,8 +13,8 @@ const SideBar = () => {
                     <div className="flex-1 px-3 bg-white divide-y space-y-1">
                         <ul className="space-y-2 pb-1">
                             <li>
-                                <a
-                                    href="/games"
+                                <Link
+                                    to="/join"
                                     className="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
                                 >
                                     <svg
@@ -29,11 +30,11 @@ const SideBar = () => {
                                         ></path>
                                     </svg>
                                     <span className="ml-3">Join Game</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="-pro/kanban/"
+                                <Link
+                                    to="/play"
                                     className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                                 >
                                     <svg
@@ -52,13 +53,13 @@ const SideBar = () => {
                                         ></path>
                                     </svg>
                                     <span className="ml-4">Play Game</span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                         <ul className="pt-1">
                             <li>
-                                <a
-                                    href="/create"
+                                <Link
+                                    to="/create"
                                     className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                                 >
                                     <svg
@@ -73,7 +74,7 @@ const SideBar = () => {
                                     <span className="bg-blue-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">
                                         Host
                                     </span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a
