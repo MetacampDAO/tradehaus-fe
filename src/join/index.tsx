@@ -27,9 +27,10 @@ const Join = () => {
     (async () =>  {
       if (wallet){
         const th = await initTradehaus(conn, wallet as any)
-        const allGameAccs = await th.fetchAllGameAcc();
+        const allGameAccs = await th.fetchJoinedGames(false);
         setGamesPreview(allGameAccs
           .sort((row)=> Number(row.account.joinTime))
+          .filter(row => row.account.maxCap > row.account.currentCap)
           .filter((row) => Number(row.account.startTime) > Date.now()/1000)
           .reverse().map((row, index) => {
           return {
