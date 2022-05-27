@@ -4,6 +4,8 @@ import Home from './home';
 import Create from './create';
 import Join from './join';
 import Main from './components/Main';
+import Play from './play';
+import PlayGame from './play/fund';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Context from './Context';
 
@@ -16,6 +18,12 @@ export const App: FC = () => {
                     <Routes>
                         <Route path='/join' element={
                             <Join />
+                        } />
+                        <Route path='/play/:gameId' element={
+                            <PlayGame />
+                        } />
+                        <Route path='/play' element={
+                            <Play />
                         } />
                         <Route path='/create' element={
                             <Create />

@@ -44,7 +44,7 @@ const Prices = () => {
   const priceChangeComp = (priceChange: number | undefined) => {
     return priceChange ? (
       <div className={`ml-5 w-0 flex items-center justify-end 
-        flex-1 text-${priceChange > 0 ? "green" : "red"}-500 text-base font-bold`}>
+        flex-1 ${priceChange > 0 ? "text-green-500" : "text-red-500"} text-base font-bold`}>
         {Math.round(priceChange * 10) / 10}%
         <svg
           className="w-5 h-5"

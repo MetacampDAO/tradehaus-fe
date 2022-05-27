@@ -78,6 +78,14 @@ export class TradehausClient extends AccountUtils {
         return this.tradehausProgram.account.fund.fetch(fund);
     }
 
+    async fetchPlayerFundAcc(gameConfig: PublicKey) {
+      const [player_fund_pda, _player_fund_bump] = await this.findPlayerFundPDA(
+        this.wallet.publicKey,
+        gameConfig
+      )
+      return this.tradehausProgram.account.fund.fetch(player_fund_pda);
+    }
+
     // --------------------------------------- find PDA addresses
 
     async findRewardEscrowPDA(gameConfig: PublicKey) {
@@ -184,6 +192,29 @@ export class TradehausClient extends AccountUtils {
             .rpc();
 
         return { txSig };
+    }
+
+    async swapPlayerItems (
+        gameConfig: PublicKey,
+        amount: number,
+        sellCoin: number,
+        buyCoin: number
+    ) {
+      const [player_fund_pda, _player_fund_bump] = await this.findPlayerFundPDA(
+        this.wallet.publicKey,
+        gameConfig
+      );
+
+      const {txSig} = await this.swapItems(
+        player_fund_pda,
+        this.wallet.publicKey,
+        gameConfig,
+        amount,
+        sellCoin,
+        buyCoin,
+      );
+
+      return {txSig};
     }
 
     async distributeRewards(

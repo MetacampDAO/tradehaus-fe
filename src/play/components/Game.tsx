@@ -3,15 +3,11 @@ import { UserOutlined, DollarOutlined, CalendarOutlined, LoadingOutlined } from 
 import { GameJoin } from '..';
 import { PublicKey } from '@solana/web3.js';
 
-interface GameProps extends GameJoin {
-  isLoading: boolean,
-  onJoin: (gamePubKey: PublicKey) => Promise<void>
-}
-
-const Game = (props: GameProps) => {
+const Game = (props: GameJoin) => {
 
   const utcStart = new Date(props.startTime*1000)
   const utcEnd = new Date(props.endTime*1000)
+  const timeNow = Date.now()/1000
 
   const truncate = (str: string) => {
     return str.length > 14 ? str.substring(0, 13) + "..." : str;
@@ -59,10 +55,9 @@ const Game = (props: GameProps) => {
                 </div>
               </div>
               <button
-                onClick={() => props.onJoin(props.gameKey)}
-                className="mb-2 md:mb-0 bg-indigo-700 px-5 py-1 shadow-sm tracking-wider text-white rounded-full hover:bg-indigo-600"
+                className={`mb-2 md:mb-0 ${(timeNow > props.startTime)? "bg-indigo-700":"cursor-default bg-gray-300"} px-5 py-1 shadow-sm tracking-wider text-white rounded-full hover:${(timeNow > props.startTime)? "bg-indigo-600":"bg-gray-300"}`}
                 type="button" aria-label="like">
-                  {props.isLoading? <LoadingOutlined /> : "Join Game"}
+                  Play Game
                 </button>
             </div>
           </div>

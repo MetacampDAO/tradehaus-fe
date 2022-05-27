@@ -77,8 +77,8 @@ const SideBar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <a
-                                    href="/users/list/"
+                                <Link
+                                    to="/dashboard"
                                     className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                                 >
                                     <svg
@@ -97,7 +97,7 @@ const SideBar = () => {
                                     <span className="bg-blue-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">
                                         Host
                                     </span>
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
