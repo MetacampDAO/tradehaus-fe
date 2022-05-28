@@ -1,14 +1,74 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
+import { CoinPrices } from '..';
 
 interface SwapProps {
   isLoading: boolean,
-  onSwap: (amount: number, sellCoin: number, buyCoin: number) => Promise<void>
+  onSwap: (amount: number, sellCoin: number, buyCoin: number) => Promise<void>,
+  coinPrices: CoinPrices |undefined
 }
 const Swap = (props: SwapProps) => {
   const [sellCoin, setSellCoin] = useState<number>(5);
   const [buyCoin, setBuyCoin] = useState<number>(5);
   const [sellAmount, setSellAmount] = useState<number>(0);
+
+  const convertCoinIntToString = (coinInt: number) => {
+    switch(coinInt) {
+      case 1:
+        return "BTC"
+      case 2:
+        return "ETH"
+      case 3:
+        return "LINK"
+      case 4:
+        return "SOL"
+      case 5:
+        return "USD"
+    }
+  }
+
+  const getExpectedCoinAmount = () => {
+    let sellCoinPrice;
+    let buyCoinPrice;
+    switch (sellCoin) {
+      case 1:
+        sellCoinPrice = props.coinPrices?.btcPrice;
+        break;
+      case 2:
+        sellCoinPrice = props.coinPrices?.ethPrice;
+        break;
+      case 3:
+        sellCoinPrice = props.coinPrices?.linkPrice;
+        break;
+      case 4:
+        sellCoinPrice = props.coinPrices?.solPrice;
+        break;
+      case 5:
+        sellCoinPrice = props.coinPrices?.usdPrice;
+        break;
+    }
+
+    switch (buyCoin) {
+      case 1:
+        buyCoinPrice = props.coinPrices?.btcPrice;
+        break;
+      case 2:
+        buyCoinPrice = props.coinPrices?.ethPrice;
+        break;
+      case 3:
+        buyCoinPrice = props.coinPrices?.linkPrice;
+        break;
+      case 4:
+        buyCoinPrice = props.coinPrices?.solPrice;
+        break;
+      case 5:
+        buyCoinPrice = props.coinPrices?.usdPrice;
+        break;
+    }
+
+    if (sellCoinPrice && buyCoinPrice)
+      return (sellAmount * sellCoinPrice)/buyCoinPrice
+  }
 
   return (
     <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10 mt-8">
@@ -55,6 +115,7 @@ const Swap = (props: SwapProps) => {
                 onChange={(e) => setSellAmount(Number(e.target.value))}
                 className="border-2 rounded-lg w-full h-12 px-4" />
             </div>
+            <div className="text-xs text-center">{sellAmount} {convertCoinIntToString(sellCoin)} → approx. {getExpectedCoinAmount()} {convertCoinIntToString(buyCoin)}</div>
 
             <button
               onClick={() => props.onSwap(sellAmount, sellCoin, buyCoin)}

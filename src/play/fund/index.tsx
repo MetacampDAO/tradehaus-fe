@@ -24,11 +24,20 @@ export interface FundValues {
   linkValue: number
 }
 
+export interface CoinPrices {
+  usdPrice: number,
+  btcPrice: number,
+  ethPrice: number,
+  solPrice: number,
+  linkPrice: number
+}
+
 const PlayGame = () => {
   const { gameId } = useParams();
   const wallet = useAnchorWallet();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [coinPrices, setCoinPrices] = useState<CoinPrices>({});
   const [portfolioValue, setPortfolioValue] = useState<number>();
   const [hoursLeft, setHoursLeft] = useState<number>();
   const [maxCap, setMaxCap] = useState<number>();
@@ -63,6 +72,8 @@ const PlayGame = () => {
       if (wallet && gameId) {
         const th = await initTradehaus(conn, wallet as any);
         const game = await th.fetchGameAcc(new PublicKey(gameId));
+        console.log("hi")
+        console.log(game)
         setHoursLeft(Math.ceil((Number(game.endTime) - Date.now() / 1000) / 3600))
         setMaxCap(Number(game.maxCap))
 
@@ -88,6 +99,15 @@ const PlayGame = () => {
         )
         setPortfolioValue(
           Number(fund.usdQty) + Number(fund.btcQty) * pricesRes.bitcoin.usd + Number(fund.ethQty) * pricesRes.ethereum.usd + Number(fund.solQty) * pricesRes.solana.usd + Number(fund.linkQty) * pricesRes.chainlink.usd
+        )
+        setCoinPrices(
+          {
+            usdPrice: 1,
+            btcPrice: pricesRes.bitcoin.usd,
+            ethPrice: pricesRes.ethereum.usd,
+            solPrice: pricesRes.solana.usd,
+            linkPrice: pricesRes.chainlink.usd
+          }
         )
       }
     })();
@@ -137,7 +157,8 @@ const PlayGame = () => {
         <div className='col-span-5'>
           <Swap 
             isLoading={isLoading}
-            onSwap={onSwap}/>
+            onSwap={onSwap}
+            coinPrices={coinPrices}/>
         </div>
       </div>
     </div>

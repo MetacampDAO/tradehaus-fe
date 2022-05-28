@@ -8,6 +8,8 @@ import Play from './play';
 import PlayGame from './play/fund';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Context from './Context';
+import Manage from './manage';
+import ManageGame from './manage/game';
 
 export const App: FC = () => {
     return (
@@ -27,6 +29,12 @@ export const App: FC = () => {
                         } />
                         <Route path='/create' element={
                             <Create />
+                        } />
+                        <Route path='/manage' element={
+                            <Manage />
+                        } />
+                        <Route path='/manage/:gameId' element={
+                            <ManageGame />
                         } />
                         <Route path='/' element={
                             <Home />

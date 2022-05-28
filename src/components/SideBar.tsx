@@ -78,7 +78,7 @@ const SideBar = () => {
                             </li>
                             <li>
                                 <Link
-                                    to="/dashboard"
+                                    to="/manage"
                                     className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                                 >
                                     <svg
@@ -93,7 +93,7 @@ const SideBar = () => {
                                             clipRule="evenodd"
                                         ></path>
                                     </svg>
-                                    <span className="ml-3 flex-1 whitespace-nowrap">Dashboard</span>
+                                    <span className="ml-3 flex-1 whitespace-nowrap">Manage</span>
                                     <span className="bg-blue-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">
                                         Host
                                     </span>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { UserOutlined, DollarOutlined, CalendarOutlined, LoadingOutlined } from '@ant-design/icons';
-import { GameJoin } from '..';
+import { GameManage } from '..';
 import { PublicKey } from '@solana/web3.js';
 import { Link } from 'react-router-dom';
 
-const Game = (props: GameJoin) => {
+const GameManage = (props: GameManage) => {
 
   const utcStart = new Date(props.startTime * 1000)
   const utcEnd = new Date(props.endTime * 1000)
@@ -13,6 +13,8 @@ const Game = (props: GameJoin) => {
   const truncate = (str: string) => {
     return str.length > 14 ? str.substring(0, 13) + "..." : str;
   };
+
+
   return (
     <div className="flex flex-col">
       <div className="bg-white shadow-md  rounded-3xl p-4">
@@ -55,11 +57,11 @@ const Game = (props: GameJoin) => {
                   <span className="text-xl">🎁</span><span> {props.rewards} Tokens</span>
                 </div>
               </div>
-              <Link to={`/play/${props.gameKey}`}  className="flex">
+              <Link to={`/manage/${props.gameKey}`} className="flex">
                 <button
-                  className={`mb-2 md:mb-0 ${(timeNow > props.startTime) ? "bg-indigo-700" : "cursor-default bg-gray-300"} px-5 py-1 shadow-sm tracking-wider text-white rounded-full hover:${(timeNow > props.startTime) ? "bg-indigo-600" : "bg-gray-300"}`}
+                  className={`mb-2 md:mb-0 bg-indigo-700 px-5 py-1 shadow-sm tracking-wider text-white rounded-full bg-indigo-600`}
                   type="button" aria-label="like">
-                  Play Game
+                  Manage Game
                 </button>
               </Link>
             </div>
@@ -70,4 +72,4 @@ const Game = (props: GameJoin) => {
   );
 }
 
-export default Game;
+export default GameManage;

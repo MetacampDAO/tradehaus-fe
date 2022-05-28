@@ -39,33 +39,55 @@ export class TradehausClient extends AccountUtils {
 
     // --------------------------------------- fetch all accounts
 
-    async fetchAllGameAcc() {
-        return this.tradehausProgram.account.game.all();
+    async fetchAllGameAcc(host?: PublicKey) {
+        const filter = host
+            ? [
+                  {
+                      memcmp: {
+                          offset: 8, //need to prepend 8 bytes for anchor's disc
+                          bytes: host.toBase58(),
+                      },
+                  },
+              ]
+            : [];
+        return this.tradehausProgram.account.game.all(filter);
     }
 
     async fetchAllFundAcc(player?: PublicKey) {
-      const filter = player?
-        [
-          {
-            memcmp: {
-              offset: 8, //need to prepend 8 bytes for anchor's disc
-              bytes: player.toBase58(),
+        const filter = player
+            ? [
+                  {
+                      memcmp: {
+                          offset: 8, //need to prepend 8 bytes for anchor's disc
+                          bytes: player.toBase58(),
+                      },
+                  },
+              ]
+            : [];
+        return this.tradehausProgram.account.fund.all(filter);
+    }
+
+    async fetchGameFundAcc(game: PublicKey) {
+        const filter = [
+            {
+                memcmp: {
+                    offset: 121, //need to prepend 8 bytes for anchor's disc
+                    bytes: game.toBase58(),
+                },
             },
-          },
-        ]
-      : [];
-      return this.tradehausProgram.account.fund.all(filter);
+        ];
+        return this.tradehausProgram.account.fund.all(filter);
     }
 
     async fetchJoinedGames(joined: boolean) {
-      const gamesList = await this.fetchAllGameAcc();
-      const existingFunds = await this.fetchAllFundAcc(this.wallet.publicKey);
-      const existingGameKeys = existingFunds.map((row, index) => row.account.gameConfig.toBase58());
-      return gamesList.filter(row => {
-        const gameJoined = existingGameKeys.includes(row.publicKey.toBase58())
-        if (joined) return gameJoined;
-        else return !gameJoined;
-      })
+        const gamesList = await this.fetchAllGameAcc();
+        const existingFunds = await this.fetchAllFundAcc(this.wallet.publicKey);
+        const existingGameKeys = existingFunds.map((row, index) => row.account.gameConfig.toBase58());
+        return gamesList.filter((row) => {
+            const gameJoined = existingGameKeys.includes(row.publicKey.toBase58());
+            if (joined) return gameJoined;
+            else return !gameJoined;
+        });
     }
 
     // --------------------------------------- fetch deserialized accounts
@@ -79,11 +101,8 @@ export class TradehausClient extends AccountUtils {
     }
 
     async fetchPlayerFundAcc(gameConfig: PublicKey) {
-      const [player_fund_pda, _player_fund_bump] = await this.findPlayerFundPDA(
-        this.wallet.publicKey,
-        gameConfig
-      )
-      return this.tradehausProgram.account.fund.fetch(player_fund_pda);
+        const [player_fund_pda, _player_fund_bump] = await this.findPlayerFundPDA(this.wallet.publicKey, gameConfig);
+        return this.tradehausProgram.account.fund.fetch(player_fund_pda);
     }
 
     // --------------------------------------- find PDA addresses
@@ -194,27 +213,19 @@ export class TradehausClient extends AccountUtils {
         return { txSig };
     }
 
-    async swapPlayerItems (
-        gameConfig: PublicKey,
-        amount: number,
-        sellCoin: number,
-        buyCoin: number
-    ) {
-      const [player_fund_pda, _player_fund_bump] = await this.findPlayerFundPDA(
-        this.wallet.publicKey,
-        gameConfig
-      );
+    async swapPlayerItems(gameConfig: PublicKey, amount: number, sellCoin: number, buyCoin: number) {
+        const [player_fund_pda, _player_fund_bump] = await this.findPlayerFundPDA(this.wallet.publicKey, gameConfig);
 
-      const {txSig} = await this.swapItems(
-        player_fund_pda,
-        this.wallet.publicKey,
-        gameConfig,
-        amount,
-        sellCoin,
-        buyCoin,
-      );
+        const { txSig } = await this.swapItems(
+            player_fund_pda,
+            this.wallet.publicKey,
+            gameConfig,
+            amount,
+            sellCoin,
+            buyCoin
+        );
 
-      return {txSig};
+        return { txSig };
     }
 
     async distributeRewards(
